@@ -1,10 +1,12 @@
 package be.vdab.keuken.repositories;
 
 import be.vdab.keuken.domain.Artikel;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.util.Optional;
 
+@Repository
 class JpaArtikelRepository implements ArtikelRepository {
     private final EntityManager manager;
 

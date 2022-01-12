@@ -21,6 +21,14 @@ public class Artikel {
 
     protected Artikel() {}
 
+    public void verhoogVerkoopPrijs(BigDecimal bedrag) {
+        if (bedrag.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException();
+        }
+        //niet vergeten verkoopprijs = verkoopprijs + ... te doen!
+        verkoopprijs = verkoopprijs.add(bedrag);
+    }
+
     public long getId() {
         return id;
     }
