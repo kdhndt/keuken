@@ -31,7 +31,7 @@ class DefaultArtikelServiceTest {
     @BeforeEach
     void beforeEach() {
         service = new DefaultArtikelService(repository);
-        artikel = new Artikel("test", BigDecimal.TEN, BigDecimal.valueOf(12));
+//        artikel = new Artikel("test", BigDecimal.TEN, BigDecimal.valueOf(12));
     }
 
     @Test

@@ -12,10 +12,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class ArtikelTest {
     private Artikel artikel;
 
+    //todo: aangepast wegens inheritance
     @BeforeEach
-    void beforeEach() {
-        artikel = new Artikel("testArtikel", BigDecimal.TEN, BigDecimal.valueOf(12));
-    }
+//    void beforeEach() {
+//        artikel = new Artikel("testArtikel", BigDecimal.TEN, BigDecimal.valueOf(12));
+//    }
 
     @Test
     void verhoogVerkoopPrijs() {
