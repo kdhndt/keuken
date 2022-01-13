@@ -52,4 +52,25 @@ class JpaArtikelRepositoryTest extends AbstractTransactionalJUnit4SpringContextT
         assertThat(artikel.getId()).isPositive();
         assertThat(countRowsInTableWhere(ARTIKELS, "id=" + artikel.getId())).isOne();
     }
+
+    @Test
+    void findByBevatWoord() {
+        assertThat(repository.findByBevatWoord("ap"))
+//                .hasSize(jdbcTemplate.queryForObject("select count(*) from artikels where naam like '%ap%'", Integer.class))
+                .hasSize(countRowsInTableWhere(ARTIKELS, "naam like '%ap%'"))
+                .extracting(Artikel::getNaam)
+                .allSatisfy(naam -> assertThat(naam).containsIgnoringCase("ap"))
+                .isSortedAccordingTo(String::compareToIgnoreCase);
+    }
+
+    @Test
+    void algemenePrijsVerhoging() {
+        assertThat(repository.algemenePrijsVerhoging(BigDecimal.TEN))
+                //vergelijk de gereturnde int waarde (aantal gewijzigd) met het aantal rijen in tabel
+                .isEqualTo(countRowsInTable(ARTIKELS));
+        //beide onderstaande tests kunnen en komen op hetzelfde neer
+        assertThat(repository.findById(idVanTestArtikel()))
+                .hasValueSatisfying(artikel -> assertThat(artikel.getVerkoopprijs()).isEqualByComparingTo("22"));
+        assertThat(countRowsInTableWhere(ARTIKELS, "verkoopprijs = 22 and id = " + idVanTestArtikel())).isOne();
+    }
 }
