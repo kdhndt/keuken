@@ -1,14 +1,14 @@
 package be.vdab.keuken.services;
 
 import be.vdab.keuken.domain.Artikel;
+import be.vdab.keuken.domain.ArtikelGroep;
+import be.vdab.keuken.domain.FoodArtikel;
 import be.vdab.keuken.exceptions.ArtikelNietGevondenException;
 import be.vdab.keuken.repositories.ArtikelRepository;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
@@ -31,7 +31,8 @@ class DefaultArtikelServiceTest {
     @BeforeEach
     void beforeEach() {
         service = new DefaultArtikelService(repository);
-//        artikel = new Artikel("test", BigDecimal.TEN, BigDecimal.valueOf(12));
+        artikel = new FoodArtikel("test", BigDecimal.TEN, BigDecimal.valueOf(12), 1, new ArtikelGroep("test"));
+
     }
 
     @Test

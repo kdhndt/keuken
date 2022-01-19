@@ -30,14 +30,14 @@ class DefaultArtikelServiceIntegrationTest extends AbstractTransactionalJUnit4Sp
     }
 
     private long idVanTestArtikel() {
-        return jdbcTemplate.queryForObject("select id from artikels where naam = 'testArtikel'", Long.class);
+        return jdbcTemplate.queryForObject("select id from artikels where naam = 'testfood'", Long.class);
     }
 
     @Test
     void verhoogVerkoopPrijs() {
         var id = idVanTestArtikel();
-        service.verhoogVerkoopPrijs(id, BigDecimal.ONE);
+        service.verhoogVerkoopPrijs(id, BigDecimal.TEN);
         manager.flush();
-        assertThat(countRowsInTableWhere(ARTIKELS, "verkoopprijs = 13 and id = " + id)).isOne();
+        assertThat(countRowsInTableWhere(ARTIKELS, "verkoopprijs = 130 and id = " + id)).isOne();
     }
 }

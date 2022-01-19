@@ -1,22 +1,19 @@
 package be.vdab.keuken.domain;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 class ArtikelTest {
     private Artikel artikel;
 
-    //todo: aangepast wegens inheritance
     @BeforeEach
-//    void beforeEach() {
-//        artikel = new Artikel("testArtikel", BigDecimal.TEN, BigDecimal.valueOf(12));
-//    }
+    void beforeEach() {
+        artikel = new FoodArtikel("test", BigDecimal.TEN, BigDecimal.valueOf(12), 1, new ArtikelGroep("test"));
+    }
 
     @Test
     void verhoogVerkoopPrijs() {
