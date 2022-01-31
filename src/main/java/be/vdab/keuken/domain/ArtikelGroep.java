@@ -3,7 +3,6 @@ package be.vdab.keuken.domain;
 import javax.persistence.*;
 import java.util.Collections;
 import java.util.LinkedHashSet;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -13,6 +12,7 @@ public class ArtikelGroep {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String naam;
+
     @OneToMany(mappedBy = "artikelGroep")
     @OrderBy("naam")
     private Set<Artikel> artikels;
@@ -39,29 +39,17 @@ public class ArtikelGroep {
     }
 
     public boolean add(Artikel artikel) {
-//        return artikels.add(artikel);
-
         var toegevoegd = artikels.add(artikel);
         var oudeArtikelGroep = artikel.getArtikelGroep();
         if (oudeArtikelGroep != null && oudeArtikelGroep != this) {
             oudeArtikelGroep.artikels.remove(artikel);
         }
-        if (this != oudeArtikelGroep) {
+        if (oudeArtikelGroep != this) {
             artikel.setArtikelGroep(this);
         }
         return toegevoegd;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof ArtikelGroep)) return false;
-        ArtikelGroep that = (ArtikelGroep) o;
-        return naam.equalsIgnoreCase(that.naam);
-    }
+    //equals en hashCode is hier niet nodig, er is nl. geen verzameling van artikelGroepen, wel van artikels, obv equals en hashCode wordt nl. gecontroleerd op duplicaten?
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(naam.toLowerCase());
-    }
 }

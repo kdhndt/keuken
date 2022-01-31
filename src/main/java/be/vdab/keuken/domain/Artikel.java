@@ -75,16 +75,17 @@ public abstract class Artikel {
         return verkoopprijs;
     }
 
+    //equals en hashCode op naam is hier voldoende, een unieke naam per artikelGroep, niet overcompliceren door op verschillende variabelen te baseren
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Artikel)) return false;
         Artikel artikel = (Artikel) o;
-        return naam.equalsIgnoreCase(artikel.naam) && Objects.equals(artikelGroep, artikel.artikelGroep);
+        return naam.equalsIgnoreCase(artikel.naam)/* && Objects.equals(artikelGroep, artikel.artikelGroep)*/;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(naam.toLowerCase(), artikelGroep);
+        return Objects.hash(naam.toLowerCase()/*, artikelGroep*/);
     }
 }

@@ -34,6 +34,11 @@ class JpaArtikelRepositoryTest extends AbstractTransactionalJUnit4SpringContextT
         return jdbcTemplate.queryForObject("select id from artikels where naam = 'testnonfood'", Long.class);
     }
 
+    @Test void artikelGroepLazyLoaded() {
+        assertThat(repository.findById(idVanTestFoodArtikel()))
+                .hasValueSatisfying(artikel -> assertThat(artikel.getArtikelGroep().getNaam()).isEqualTo("test"));
+    }
+
     @Test
     void findFoodArtikelById() {
         assertThat(repository.findById(idVanTestFoodArtikel()))
@@ -55,14 +60,13 @@ class JpaArtikelRepositoryTest extends AbstractTransactionalJUnit4SpringContextT
         assertThat(repository.findById(-1)).isNotPresent();
     }
 
-    //todo: nog eens allemaal herbekijken, had vergeten mijn set te initialiseren in ArtikelGroep constructor...... we wilden een set aanspreken die nog niet bestond?
     @Test
     void createFoodArtikel() {
         var artikelGroep = new ArtikelGroep("test");
         var artikel = new FoodArtikel("testfood2", BigDecimal.TEN, BigDecimal.valueOf(12), 5, artikelGroep);
         manager.persist(artikelGroep);
         repository.create(artikel);
-        manager.flush();
+//        manager.flush();
         assertThat(artikel.getId()).isPositive();
         assertThat(countRowsInTableWhere(ARTIKELS, "id=" + artikel.getId())).isOne();
     }
@@ -73,7 +77,7 @@ class JpaArtikelRepositoryTest extends AbstractTransactionalJUnit4SpringContextT
         var artikel = new NonFoodArtikel("testnonfood2", BigDecimal.TEN, BigDecimal.valueOf(12), 5, artikelGroep);
         manager.persist(artikelGroep);
         repository.create(artikel);
-        manager.flush();
+//        manager.flush();
         assertThat(artikel.getId()).isPositive();
         assertThat(countRowsInTableWhere(ARTIKELS, "id=" + artikel.getId())).isOne();
     }

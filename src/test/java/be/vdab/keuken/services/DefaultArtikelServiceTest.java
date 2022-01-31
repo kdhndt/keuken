@@ -27,11 +27,13 @@ class DefaultArtikelServiceTest {
     @Mock
     private ArtikelRepository repository;
     private Artikel artikel;
+    private ArtikelGroep artikelGroep;
 
     @BeforeEach
     void beforeEach() {
         service = new DefaultArtikelService(repository);
-        artikel = new FoodArtikel("test", BigDecimal.TEN, BigDecimal.valueOf(12), 1, new ArtikelGroep("test"));
+        artikelGroep = new ArtikelGroep("test");
+        artikel = new FoodArtikel("test", BigDecimal.TEN, BigDecimal.valueOf(12), 1, artikelGroep);
 
     }
 

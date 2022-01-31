@@ -1,6 +1,5 @@
 package be.vdab.keuken.services;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
@@ -16,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DataJpaTest(showSql = false)
 @Import(DefaultArtikelService.class)
 @ComponentScan(value = "be.vdab.keuken.repositories", resourcePattern = "JpaArtikelRepository.class")
-@Sql("/insertArtikel.sql")
+@Sql({"/insertArtikelGroep.sql", "/insertArtikel.sql"})
 
 class DefaultArtikelServiceIntegrationTest extends AbstractTransactionalJUnit4SpringContextTests {
 
