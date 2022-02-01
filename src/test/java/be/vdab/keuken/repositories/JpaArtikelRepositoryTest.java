@@ -83,12 +83,19 @@ class JpaArtikelRepositoryTest extends AbstractTransactionalJUnit4SpringContextT
     }
 
     @Test
-    void findByBevatWoord() {
-        assertThat(repository.findByBevatWoord("ap"))
+    void findByNaamContains() {
+        var artikels = repository.findByBevatWoord("a");
+        manager.clear();
+        assertThat(artikels)
                 .hasSize(countRowsInTableWhere(ARTIKELS, "naam like '%ap%'"))
                 .extracting(Artikel::getNaam)
                 .allSatisfy(naam -> assertThat(naam).containsIgnoringCase("ap"))
                 .isSortedAccordingTo(String::compareToIgnoreCase);
+        assertThat(artikels)
+                //zoek eerst artikelGroep om de naam ervan te vinden
+                .extracting(Artikel::getArtikelGroep)
+                .extracting(ArtikelGroep::getNaam)
+                .isNotNull();
     }
 
     @Test

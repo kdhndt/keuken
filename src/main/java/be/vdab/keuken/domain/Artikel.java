@@ -11,6 +11,8 @@ import java.util.Set;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "artikels")
 @DiscriminatorColumn(name = "soort")
+//gebruik het artikelGroep attribuut als knooppunt om de bijbehorende ArtikelGroep Entity te lezen (verbonden via associatie)
+@NamedEntityGraph(name = Artikel.MET_ARTIKELGROEP, attributeNodes = @NamedAttributeNode("artikelGroep"))
 public abstract class Artikel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,10 +23,11 @@ public abstract class Artikel {
     @ElementCollection @OrderBy("vanafAantal")
     @CollectionTable(name = "kortingen", joinColumns = @JoinColumn(name = "artikelId"))
     private Set<Korting> kortingen;
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "artikelgroepId")
     private ArtikelGroep artikelGroep;
+    //public visibility, we hebben deze bv. nodig in onze repo
+    public static final String MET_ARTIKELGROEP = "Artikel.metArtikelGroep";
 
     public Artikel(String naam, BigDecimal aankoopprijs, BigDecimal verkoopprijs, ArtikelGroep artikelGroep) {
         this.naam = naam;

@@ -26,6 +26,7 @@ class JpaArtikelRepository implements ArtikelRepository {
         manager.persist(artikel);
     }
 
+    //findByNaamContains is betere naamgeving
     @Override
     public List<Artikel> findByBevatWoord(String woord) {
         return manager.createNamedQuery("Artikel.findByBevatWoord", Artikel.class)
@@ -33,6 +34,7 @@ class JpaArtikelRepository implements ArtikelRepository {
                 //gebruik verschillende naamgevingen ipv overal "woord" om dit te verduidelijken
                 //String, object
                 .setParameter("zoals","%" + woord + "%")
+                .setHint("javax.persistence.loadgraph", manager.createEntityGraph(Artikel.MET_ARTIKELGROEP))
                 .getResultList();
 
         //Hans voorstel:
